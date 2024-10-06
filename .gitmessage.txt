@@ -1,0 +1,23 @@
+type: subject
+
+body
+
+
+
+## Type
+
+# feat (new feature)
+# fix (code correction)
+# improve (simple code improvements)
+# test (test incorporation)
+# conf (configuration file modification)
+# docs (documentation)
+
+## Subject
+# Brief description of the issue 
+
+## Cuerpo (opcional)
+# Will be used when the subject is not descriptive enough
+
+## Example
+# fix: fixes issue with requests
