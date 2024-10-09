@@ -6,6 +6,7 @@ import 'package:snooker_flutter/services/http_services/users_service.dart';
 import 'package:snooker_flutter/services/http_services/login_service.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
@@ -115,8 +116,11 @@ class _ProfileViewState extends State<ProfileView> {
           _buildUserInfoItem(
               'Apellidos', myUser?.surname ?? 'Apellidos no disponibles'),
           _buildUserInfoItem('Correo', myUser?.email ?? 'Correo no disponible'),
-          _buildUserInfoItem('Fecha de Nacimiento',
-              myUser?.bornDate ?? 'Fecha de nacimiento no disponible'),
+          _buildUserInfoItem(
+              'Fecha de Nacimiento',
+              myUser?.bornDate != null
+                  ? _formatDate(myUser!.bornDate!)
+                  : 'Fecha de nacimiento no disponible'),
           _buildUserInfoItem('Género', myUser?.genre ?? 'Género no disponible'),
           const SizedBox(height: 20),
           _buildStatisticsCard('Mis últimos partidos', myUser),
@@ -440,6 +444,15 @@ class _ProfileViewState extends State<ProfileView> {
       },
     ).then(
         (_) => _clearImage()); // Ensure image is cleared when dialog is closed.
+  }
+
+  String _formatDate(String bornDate) {
+    try {
+      DateTime parsedDate = DateTime.parse(bornDate);
+      return DateFormat('dd/MM/yyyy').format(parsedDate);
+    } catch (e) {
+      return 'Fecha no válida';
+    }
   }
 
   Future<void> _selectPhoto(BuildContext context, StateSetter setState) async {

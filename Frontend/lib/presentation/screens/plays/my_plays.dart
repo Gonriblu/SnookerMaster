@@ -38,7 +38,6 @@ class _MyPlaysScreenState extends State<MyPlaysScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Imagen guardada en la galería')),
       );
-      print(result);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error al guardar la imagen $e')),

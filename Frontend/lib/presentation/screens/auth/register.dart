@@ -96,7 +96,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
                                       content:
-                                          Text('Ha habido un error inexperado'),
+                                          Text('Ha habido un error inesperado'),
                                     ),
                                   );
                                 } finally {

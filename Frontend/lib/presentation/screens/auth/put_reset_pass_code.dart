@@ -48,12 +48,17 @@ class _ResetPassCodeScreenState extends State<ResetPassCodeScreen> {
                               ? null
                               : () async {
                                   setState(() {
-                                    isLoading = true; // Habilitar estado de carga
+                                    isLoading =
+                                        true; // Habilitar estado de carga
                                   });
                                   try {
-                                    final response = await LoginService.getInstance().checkPassCode(widget.email, codeCtrl.text);
+                                    final response =
+                                        await LoginService.getInstance()
+                                            .checkPassCode(
+                                                widget.email, codeCtrl.text);
                                     if (response == 'success') {
-                                      context.go('/reset_pass/${widget.email}/${codeCtrl.text}');
+                                      context.go(
+                                          '/reset_pass/${widget.email}/${codeCtrl.text}');
                                     }
                                   } catch (e) {
                                     ScaffoldMessenger.of(context).showSnackBar(
@@ -63,17 +68,21 @@ class _ResetPassCodeScreenState extends State<ResetPassCodeScreen> {
                                     );
                                   } finally {
                                     setState(() {
-                                      isLoading = false; // Deshabilitar estado de carga
+                                      isLoading =
+                                          false;
                                     });
                                   }
                                 },
-                          child: Row(
-                            children: [
-                              const Text('Enviar'),
-                              if (isLoading) const SizedBox(width: 10),
-                              if (isLoading) const CircularProgressIndicator(),
-                            ],
-                          ),
+                          child: isLoading
+                              ? const SizedBox(
+                                  width: 20,
+                                  height: 20,
+                                  child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                        Colors.white),
+                                  ),
+                                )
+                              : const Text('Enviar'),
                         ),
                       ],
                     ),

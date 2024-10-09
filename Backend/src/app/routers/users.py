@@ -608,9 +608,8 @@ def send_email_to_confirm_registration(user: DBUser, code: str):
         
         subject = "Confirmación de correo"
         body = f'''Hola {user.name}, has solicitado registrate en Snooker Master.
-                \n Accede a la siguiente url para confirmar tu correo. 
                 <br><br>Este es tu código para confirmar tu correo {code}</a>
-                \n Este enlace dejará de funcionar en 30 minutos.'''
+                \n Este código dejará de funcionar en 30 minutos.'''
 
         message = MIMEMultipart()
         message["From"] = sender_email

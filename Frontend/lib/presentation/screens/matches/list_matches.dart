@@ -347,7 +347,7 @@ class ListMatchesScreenState extends State<ListMatchesScreen> {
         DropdownButton<double>(
           hint: const Text('Mínimo Elo'),
           value: minElo,
-          items: List.generate(10, (index) => (index + 1) * 0.5).map((value) {
+          items: List.generate(20, (index) => (index + 1) * 0.5).map((value) {
             return DropdownMenuItem<double>(
               value: value,
               child: Text(value.toString()),
@@ -362,7 +362,7 @@ class ListMatchesScreenState extends State<ListMatchesScreen> {
         DropdownButton<double>(
           hint: const Text('Máximo Elo'),
           value: maxElo,
-          items: List.generate(10, (index) => (index + 1) * 0.5).map((value) {
+          items: List.generate(20, (index) => (index + 1) * 0.5).map((value) {
             return DropdownMenuItem<double>(
               value: value,
               child: Text(value.toString()),

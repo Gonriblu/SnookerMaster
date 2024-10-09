@@ -102,7 +102,7 @@ class UsersService {
       Map<String, dynamic> data = {};
       if (name != null) data['name'] = name;
       if (surname != null) data['surname'] = surname;
-      if (bornDate != null) data['born_date'] = bornDate;
+      if (bornDate != null  && bornDate.isNotEmpty) data['born_date'] = bornDate;
       if (genre != null) data['genre'] = genre;
 
       response = await dio.patch('/users/update/me', data: data);

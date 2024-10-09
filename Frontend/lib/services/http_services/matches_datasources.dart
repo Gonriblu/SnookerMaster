@@ -100,7 +100,6 @@ class MatchService {
       if (response.statusCode == 200) {
         final List<dynamic> data = response.data;
         return mapMatches(data);
-        
       } else {
         throw Exception('Error en la solicitud');
       }
@@ -163,9 +162,7 @@ class MatchService {
 
   Future<bool> deleteMatch(String matchId) async {
     try {
-
-      final response =
-          await dio.delete('/matches/$matchId');
+      final response = await dio.delete('/matches/$matchId');
 
       if (response.statusCode == 200) {
         return true;
@@ -232,19 +229,26 @@ class MatchService {
   Future<String> confirmResult(
       bool agreed, String matchId, int? localFrames, int? visitorFrames) async {
     if (!agreed) {
-      return 'Complete todos los campos';
+      if (localFrames == null || visitorFrames == null) {
+        return 'Complete todos los campos';
+      }
     }
+
     dynamic response;
     try {
       Map<String, dynamic> data = {
         'match_id': matchId,
         'agreed': agreed,
       };
+
+      if (!agreed) {
+        data['local_frames'] = localFrames;
+        data['visitor_frames'] = visitorFrames;
+      }
       if (localFrames != null) data['local_frames'] = localFrames;
       if (visitorFrames != null) data['visitor_frames'] = visitorFrames;
 
       response = await dio.post('/matches/confirm_result', data: data);
-      print('LA REPSONSEEEW');
       if (response.statusCode == 200) {
         const dynamic data = 'Enviado correctamente';
         return (data);

@@ -255,7 +255,6 @@ creating_play_responses = {
 @projects_router.post("/{project_id}/new_play", status_code=status.HTTP_200_OK, responses= {**ERROR_500, **creating_play_responses})
 async def new_play(project_id:str, db: db_dependency, current_user: current_user, video_file: UploadFile = File(...), pocket: Pocket = Form(...)):
     try:
-        logging.info(f"Creating play")
         project = db.query(Project).filter(Project.id == project_id).first()
         if not project:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=PROJECT_NOT_FOUND)
@@ -263,10 +262,8 @@ async def new_play(project_id:str, db: db_dependency, current_user: current_user
         if project.user != current_user.user:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=YOU_ARE_NOT_THE_OWNER)
             
-        logging.info(f"Processing video")
         video_info, photo_path, processed_video_path = process_video(video_file)
         
-        logging.info(f"Processing statistics")
         distance, angle, first_color_ball, second_color_ball, success, ball_paths = process_statistics(video_info, pocket)
         
         new_play = Play(id =str(uuid.uuid4()), 
@@ -284,7 +281,6 @@ async def new_play(project_id:str, db: db_dependency, current_user: current_user
         
         db.add(new_play)
         db.commit()
-        logging.info(f"Play created")
         return distance, angle, first_color_ball, second_color_ball, success
         
     except HTTPException as http_exception:

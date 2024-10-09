@@ -316,14 +316,14 @@ async def confirm_result(data: ConfirmResult, db: db_dependency, current_user: c
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=MATCH_NOT_FOUND)
 
         if data.agreed:
-            K = 0.2 
+            K = 0.45
 
             local_elo = match.local_start_match_elo
             visitor_elo = match.visitor_start_match_elo
 
             elo_difference = visitor_elo - local_elo
             
-            expected_local_win_prob = 1 / (1 + 10 ** (elo_difference / 400))
+            expected_local_win_prob = 1 / (1 + 10 ** (elo_difference / 10))
             
             if match.local_frames > match.visitor_frames:
                 local_result = 1
@@ -332,8 +332,8 @@ async def confirm_result(data: ConfirmResult, db: db_dependency, current_user: c
                 local_result = 0
                 visitor_result = 1
             
-            new_local_elo = local_elo + K * (local_result - expected_local_win_prob)
-            new_visitor_elo = visitor_elo + K * (visitor_result - (1 - expected_local_win_prob))
+            new_local_elo = match.local.elo + K * (local_result - expected_local_win_prob)
+            new_visitor_elo = match.visitor.elo + K * (visitor_result - (1 - expected_local_win_prob))
             
             final_local_elo = min(max(new_local_elo, 1.0), 10.0)
             final_visitor_elo = min(max(new_visitor_elo, 1.0), 10.0)

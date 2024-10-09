@@ -80,7 +80,6 @@ class _MatchDetailsScreenState extends State<MatchDetailsScreen> {
     final matchDate = _parseMatchDatetime(match!.matchDatetime);
     final bool matchHasBegan =
         matchDate != null && matchDate.isBefore(DateTime.now());
-    print(matchHasBegan);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Detalles del Partido'),
